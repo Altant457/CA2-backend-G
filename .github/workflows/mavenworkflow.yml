@@ -4,7 +4,7 @@ on:
     branches: 
     - main
 jobs:
-  Test and deploy:
+  Test-and-deploy:
     runs-on: ubuntu-20.04 #or ubuntu-latest
     # services:
     #   mysql:
