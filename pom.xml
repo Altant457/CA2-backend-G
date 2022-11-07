@@ -3,11 +3,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>dat.sem3</groupId>
-    <artifactId>sec_demo</artifactId>
+    <artifactId>quickstaert</artifactId>
     <version>1.0.1</version>
     <packaging>war</packaging>
 
-    <name>sec_demo</name>
+    <name>quickstart</name>
 
     <properties>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
@@ -20,7 +20,7 @@
 
         <!-- TODO: Add your own database name -->
         <!-- IMPORTANT-1: The database should exist on your droplet -->
-        <db.name>sec_demo</db.name>
+        <db.name>startcode</db.name>
     </properties>
     
     <dependencies>
