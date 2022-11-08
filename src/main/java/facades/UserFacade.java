@@ -81,7 +81,6 @@ public class UserFacade {
         em.getTransaction().begin();
         Role userRole = new Role("user");
         user.addRole(userRole);
-        em.persist(userRole);
         em.persist(user);
         em.getTransaction().commit();
         return createdUser;
