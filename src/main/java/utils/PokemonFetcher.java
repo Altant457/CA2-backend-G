@@ -16,7 +16,8 @@ public class PokemonFetcher {
             String pokeJSON = HttpUtils.fetchData(String.format("https://pokeapi.co/api/v2/pokemon/%s/", query));
             JsonObject json = JsonParser.parseString(pokeJSON).getAsJsonObject();
             String id = json.get("id").getAsString();
-            String name = json.get("name").getAsString();
+            String name = json.get("species").getAsJsonObject()
+                    .get("name").getAsString();
             String imageURL = json.get("sprites").getAsJsonObject()
                     .get("other").getAsJsonObject()
                     .get("official-artwork").getAsJsonObject()
