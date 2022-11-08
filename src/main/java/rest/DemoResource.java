@@ -20,7 +20,6 @@ import javax.ws.rs.core.SecurityContext;
 import facades.UserFacade;
 import utils.EMF_Creator;
 
-import static rest.RenameMeResource.GSON;
 
 /**
  * @author lam@cphbusiness.dk
