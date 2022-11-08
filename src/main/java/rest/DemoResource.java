@@ -104,19 +104,13 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("pokemon")
-//    @RolesAllowed({"user", "admin"})
+    @RolesAllowed({"user", "admin"})
     public String getPokeInfo(String pokemon) throws IOException {
-        String pokeName;
-        String pokeID;
+        String query;
         PokemonDTO pokemonDTO;
         JsonObject json = JsonParser.parseString(pokemon).getAsJsonObject();
-        pokeName = json.get("name").getAsString();
-        pokeID = json.get("id").getAsString();
-        if (pokeName == null || pokeName.equals("")) {
-            pokemonDTO = PokemonFetcher.getData(pokeID);
-        } else {
-            pokemonDTO = PokemonFetcher.getData(pokeName);
-        }
+        query = json.get("query").getAsString();
+        pokemonDTO = PokemonFetcher.getData(query);
         return GSON.toJson(pokemonDTO);
     }
 
