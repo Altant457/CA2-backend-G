@@ -2,6 +2,8 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import entities.User;
 
 import java.util.ArrayList;
@@ -99,7 +101,10 @@ public class DemoResource {
         @Consumes("application/json")
         @Produces("application/json")
         public String createUser(String userJSON) { // input is the body of the request, generated in the frontend
-            User user = GSON.fromJson(userJSON, User.class);
+            JsonObject json = JsonParser.parseString(userJSON).getAsJsonObject();
+            String username = json.get("userName").getAsString();
+            String password = json.get("userPass").getAsString();
+            User user = new User(username, password);
 //            if (!Objects.equals(newFullPersonDTO.getEmail(), null)
 //                    && !Objects.equals(newFullPersonDTO.getFirstName(), null)
 //                    && !Objects.equals(newFullPersonDTO.getLastName(), null)) {
