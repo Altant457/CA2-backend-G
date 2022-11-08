@@ -8,3 +8,12 @@ Content-Type: application/json
 ###
 GET http://localhost:8080/sec_demo/api/info/admin
 X-Access-Token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsInJvbGVzIjoiYWRtaW4iLCJleHAiOjE2NjcyOTk5NzEsImlhdCI6MTY2NzI5ODE3MSwiaXNzdWVyIjoic2VtZXN0ZXJzdGFydGNvZGUtZGF0MyIsInVzZXJuYW1lIjoiYWRtaW4ifQ.TOIzMcm5xiGfORrc8Egv_v3--4a4jtdY355OQ6v2nfA
+###
+
+POST http://localhost:8080/CA2_backend_G_war_exploded/api/info/pokemon
+Content-Type: application/json
+
+{
+  "name": "",
+  "id": "133"
+}
