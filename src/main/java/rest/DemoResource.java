@@ -96,7 +96,7 @@ public class DemoResource {
     }
 
         @POST
-        @Path("person")
+        @Path("signup")
         @Consumes("application/json")
         @Produces("application/json")
         public String createUser(String userJSON) { // input is the body of the request, generated in the frontend
