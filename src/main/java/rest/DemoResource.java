@@ -4,11 +4,17 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dtos.ComboDTO;
 import dtos.PokemonDTO;
+import dtos.RandomFactDTO;
 import entities.User;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
@@ -22,6 +28,8 @@ import javax.ws.rs.core.SecurityContext;
 
 import facades.UserFacade;
 import utils.EMF_Creator;
+import utils.FactFetcher;
+import utils.HttpUtils;
 import utils.PokemonFetcher;
 
 
@@ -104,14 +112,20 @@ public class DemoResource {
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("pokemon")
-    @RolesAllowed({"user", "admin"})
-    public String getPokeInfo(String pokemon) throws IOException {
+//    @RolesAllowed({"user", "admin"})
+    public String getPokeInfo(String pokemon) throws IOException, ExecutionException, InterruptedException {
         String query;
         PokemonDTO pokemonDTO;
+        RandomFactDTO randomFactDTO;
         JsonObject json = JsonParser.parseString(pokemon).getAsJsonObject();
         query = json.get("query").getAsString();
-        pokemonDTO = PokemonFetcher.getData(query);
-        return GSON.toJson(pokemonDTO);
+
+        ExecutorService executor = Executors.newCachedThreadPool();
+        Future<PokemonDTO> futurePKMN = executor.submit(() -> PokemonFetcher.getData(query));
+        Future<RandomFactDTO> futureRNDF = executor.submit(FactFetcher::getFact);
+        pokemonDTO = futurePKMN.get();
+        randomFactDTO = futureRNDF.get();
+        return GSON.toJson(new ComboDTO(pokemonDTO, randomFactDTO));
     }
 
     @POST

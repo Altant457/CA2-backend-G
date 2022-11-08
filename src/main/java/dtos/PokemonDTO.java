@@ -11,12 +11,15 @@ public class PokemonDTO {
         this.imageURL = imageURL;
     }
 
-    @Override
-    public String toString() {
-        return "PokemonDTO{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", imageURL='" + imageURL + '\'' +
-                '}';
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImageURL() {
+        return imageURL;
     }
 }
