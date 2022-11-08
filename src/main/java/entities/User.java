@@ -23,6 +23,7 @@ public class  User implements Serializable {
   @Id
   @Basic(optional = false)
   @NotNull
+  @Size(min = 1, max = 255)
   @Column(name = "user_name", length = 25)
   private String userName;
   @Basic(optional = false)
