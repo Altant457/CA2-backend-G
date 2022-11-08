@@ -14,6 +14,6 @@ POST http://localhost:8080/CA2_backend_G_war_exploded/api/info/pokemon
 Content-Type: application/json
 
 {
-  "name": "",
-  "id": "133"
+  "name": "sprigatito",
+  "id": "905"
 }

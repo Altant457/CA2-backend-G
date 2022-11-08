@@ -1,5 +1,7 @@
 package utils;
 
+import javax.ws.rs.WebApplicationException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -8,7 +10,7 @@ import java.util.Scanner;
 
 public class HttpUtils {
 
-    public static String fetchData(String _url) throws MalformedURLException, IOException {
+    public static String fetchData(String _url) throws MalformedURLException, IOException, FileNotFoundException {
         URL url = new URL(_url);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");

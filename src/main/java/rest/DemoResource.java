@@ -120,22 +120,22 @@ public class DemoResource {
         return GSON.toJson(pokemonDTO);
     }
 
-        @POST
-        @Path("signup")
-        @Consumes("application/json")
-        @Produces("application/json")
-        public String createUser(String userJSON) { // input is the body of the request, generated in the frontend
-            JsonObject json = JsonParser.parseString(userJSON).getAsJsonObject();
-            String username = json.get("userName").getAsString();
-            String password = json.get("userPass").getAsString();
-            User user = new User(username, password);
+    @POST
+    @Path("signup")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String createUser(String userJSON) { // input is the body of the request, generated in the frontend
+        JsonObject json = JsonParser.parseString(userJSON).getAsJsonObject();
+        String username = json.get("userName").getAsString();
+        String password = json.get("userPass").getAsString();
+        User user = new User(username, password);
 //            if (!Objects.equals(newFullPersonDTO.getEmail(), null)
 //                    && !Objects.equals(newFullPersonDTO.getFirstName(), null)
 //                    && !Objects.equals(newFullPersonDTO.getLastName(), null)) {
 //                Person newPerson = new Person(newFullPersonDTO);
-                User createdUser = FACADE.createUser(user);
+            User createdUser = FACADE.createUser(user);
 
-                return GSON.toJson(createdUser);
+            return GSON.toJson(createdUser);
 //            } else {
 //                List<String> msg = new ArrayList<>();
 //                if (Objects.equals(newFullPersonDTO.getFirstName(), null)) msg.add("Field \"First name\" is required. ");
@@ -144,6 +144,6 @@ public class DemoResource {
 //                throw new WebApplicationException(String.join("\n", msg), 400);
 //            }
 
-        }
+    }
 
 }
