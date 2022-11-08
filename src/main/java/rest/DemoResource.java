@@ -4,11 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import dtos.PokemonDTO;
 import entities.User;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
-import java.util.Objects;
+import javax.annotation.security.DeclareRoles;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -21,12 +22,14 @@ import javax.ws.rs.core.SecurityContext;
 
 import facades.UserFacade;
 import utils.EMF_Creator;
+import utils.PokemonFetcher;
 
 
 /**
  * @author lam@cphbusiness.dk
  */
 @Path("info")
+@DeclareRoles({"user", "admin"})
 public class DemoResource {
 
     private static final EntityManagerFactory EMF = EMF_Creator.createEntityManagerFactory();
@@ -64,7 +67,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("user")
-    @RolesAllowed("user")
+    @RolesAllowed({"user"})
     public String getFromUser() {
         String thisuser = securityContext.getUserPrincipal().getName();
         return "{\"msg\": \"Hello to User: " + thisuser + "\"}";
@@ -73,7 +76,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("admin")
-    @RolesAllowed("admin")
+    @RolesAllowed({"admin"})
     public String getFromAdmin() {
         String thisuser = securityContext.getUserPrincipal().getName();
         return "{\"msg\": \"Hello to (admin) User: " + thisuser + "\"}";
@@ -82,6 +85,7 @@ public class DemoResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("populate")
+    @RolesAllowed({"admin"})
     public String populateDB() {
         FACADE.populate();
         return "{\"msg\":\"DB populated\"}";
@@ -94,6 +98,26 @@ public class DemoResource {
 //        } finally {
 //            em.close();
 //        }
+    }
+
+    @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("pokemon")
+//    @RolesAllowed({"user", "admin"})
+    public String getPokeInfo(String pokemon) throws IOException {
+        String pokeName;
+        String pokeID;
+        PokemonDTO pokemonDTO;
+        JsonObject json = JsonParser.parseString(pokemon).getAsJsonObject();
+        pokeName = json.get("name").getAsString();
+        pokeID = json.get("id").getAsString();
+        if (pokeName == null || pokeName.equals("")) {
+            pokemonDTO = PokemonFetcher.getData(pokeID);
+        } else {
+            pokemonDTO = PokemonFetcher.getData(pokeName);
+        }
+        return GSON.toJson(pokemonDTO);
     }
 
         @POST
