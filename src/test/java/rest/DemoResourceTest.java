@@ -116,8 +116,8 @@ class DemoResourceTest {
                 .then()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo("133"))
-                .body("name", equalTo("eevee"));
+                .body("pokemonId", equalTo("133"))
+                .body("pokemonName", equalTo("eevee"));
     }
 
     @Test
