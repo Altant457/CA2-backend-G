@@ -75,4 +75,15 @@ public class UserFacade {
     }
 
 
+    public User createUser(User user) {
+        User createdUser = user;
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+        Role userRole = new Role("user");
+        user.addRole(userRole);
+        em.persist(userRole);
+        em.persist(user);
+        em.getTransaction().commit();
+        return createdUser;
+    }
 }

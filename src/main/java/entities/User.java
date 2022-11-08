@@ -58,6 +58,7 @@ public class  User implements Serializable {
 //        return pw.equals(this.userPass);
 //    }
 
+  //TODO add extra userpass and check if alike
   public User(String userName, String userPass) {
     this.userName = userName;
 
