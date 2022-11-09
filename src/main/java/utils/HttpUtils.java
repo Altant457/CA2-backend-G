@@ -1,6 +1,5 @@
 package utils;
 
-import javax.ws.rs.WebApplicationException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -19,11 +18,11 @@ public class HttpUtils {
         con.setRequestProperty("User-Agent", "server");
 
         Scanner scan = new Scanner(con.getInputStream());
-        String jsonStr = null;
-        if (scan.hasNext()) {
-            jsonStr = scan.nextLine();
+        StringBuilder jsonStr = new StringBuilder();
+        while (scan.hasNext()) {
+            jsonStr.append(scan.nextLine());
         }
         scan.close();
-        return jsonStr;
+        return jsonStr.toString();
     }
 }
