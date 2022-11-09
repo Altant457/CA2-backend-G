@@ -17,6 +17,8 @@
 This document explains how to use this code (build, test and deploy), locally with maven, and remotely with maven controlled by Github actions
  - [How to use](https://docs.google.com/document/d/1rymrRWF3VVR7ujo3k3sSGD_27q73meGeiMYtmUtYt6c/edit?usp=sharing)
 
+Remember to edit the `pom.xml` so the URL specified in `<remote.server>` matches your server.
+
 When you have got the project up and running, run the `main` method in [SetupTestUsers](src/main/java/utils/SetupTestUsers.java) to get a starting point with some test users.
 
 ### JPA snippets
