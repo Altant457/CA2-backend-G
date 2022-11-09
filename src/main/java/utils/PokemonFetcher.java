@@ -12,6 +12,7 @@ import java.io.IOException;
 public class PokemonFetcher {
 
     public static PokemonDTO getData(String query) throws IOException {
+        System.out.println(query);
         try {
             String pokeJSON = HttpUtils.fetchData(String.format("https://pokeapi.co/api/v2/pokemon/%s/", query));
             JsonObject json = JsonParser.parseString(pokeJSON).getAsJsonObject();

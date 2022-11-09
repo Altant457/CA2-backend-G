@@ -16,3 +16,11 @@ Content-Type: application/json
 {
   "query": "133"
 }
+
+###
+POST http://localhost:8080/sec_demo_war_exploded/api/info/pokemondeck
+Content-Type: application/json
+
+{
+"deckSize": "10"
+}

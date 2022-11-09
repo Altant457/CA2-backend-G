@@ -10,6 +10,7 @@ import dtos.RandomFactDTO;
 import entities.User;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
@@ -129,6 +130,39 @@ public class DemoResource {
     }
 
     @POST
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("pokemondeck")
+    public String getPokemonDeck(String deckSize) throws IOException, ExecutionException, InterruptedException {
+        int size;
+        PokemonDTO pokemonDTO;
+        RandomFactDTO randomFactDTO;
+        List<ComboDTO> comboDTOs = new ArrayList<>();
+
+        JsonObject json = JsonParser.parseString(deckSize).getAsJsonObject();
+        size = Integer.parseInt(json.get("deckSize").getAsString());
+
+        ExecutorService executor = Executors.newCachedThreadPool();
+        List<Future<PokemonDTO>> futuresPKMN = new ArrayList<>();
+        List<Future<RandomFactDTO>> futuresRNDF = new ArrayList<>();
+        Future<PokemonDTO> futurePKMN;
+        for (int i = 0; i <= size-1; i++) {
+            String finalI = String.valueOf((int) (Math.random() * 904 + 1));
+            futurePKMN = executor.submit(() -> PokemonFetcher.getData(finalI));
+            futuresPKMN.add(futurePKMN);
+            Future<RandomFactDTO> futureRNDF = executor.submit(FactFetcher::getFact);
+            futuresRNDF.add(futureRNDF);
+        }
+
+        for (int i = 0; i <= size-1; i++) {
+            pokemonDTO = futuresPKMN.get(i).get();
+            randomFactDTO = futuresRNDF.get(i).get();
+            comboDTOs.add(new ComboDTO(pokemonDTO, randomFactDTO));
+        }
+        return GSON.toJson(comboDTOs);
+    }
+
+    @POST
     @Path("signup")
     @Consumes("application/json")
     @Produces("application/json")
@@ -141,9 +175,9 @@ public class DemoResource {
 //                    && !Objects.equals(newFullPersonDTO.getFirstName(), null)
 //                    && !Objects.equals(newFullPersonDTO.getLastName(), null)) {
 //                Person newPerson = new Person(newFullPersonDTO);
-            User createdUser = FACADE.createUser(user);
+        User createdUser = FACADE.createUser(user);
 
-            return GSON.toJson(createdUser);
+        return GSON.toJson(createdUser);
 //            } else {
 //                List<String> msg = new ArrayList<>();
 //                if (Objects.equals(newFullPersonDTO.getFirstName(), null)) msg.add("Field \"First name\" is required. ");
